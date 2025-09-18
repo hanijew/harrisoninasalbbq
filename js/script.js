@@ -37608,21 +37608,28 @@
 
 //* * * * * * Animated css animation * * * * * *//
 const slides = document.querySelector(".container_backgrounds"); // backgrounds
-const paragraphTrack = document.querySelector(".slider_paragraph"); // paragraph container
-const paragraphs = document.querySelectorAll(".slider_paragraph > div"); // each paragraph
+const paragraphTrack = document.querySelector(".slider_paragraph");
+const paragraphs = document.querySelectorAll(".slider_paragraph > div");
+const bbqImages = document.querySelectorAll(".container_product img");
+const titleTrack = document.querySelector(".title_track");
+const subTitleTrack = document.querySelector(".sub_titles_track");
 
-const bbqImages = document.querySelectorAll(".container_product img"); // bbq images
+let index = 1; // start at 1 (because we’ll prepend a clone)
+let slideWidth, slideGap;
+let totalSlides = slides.children.length;
 
-const titleTrack = document.querySelector(".title_track"); // Header title track
-const subTitleTrack = document.querySelector(".sub_titles_track"); // wrapper for sliding subtitles
+// 1. Clone first and last slides
+const firstClone = slides.children[0].cloneNode(true);
+const lastClone = slides.children[totalSlides - 1].cloneNode(true);
 
+slides.appendChild(firstClone);
+slides.insertBefore(lastClone, slides.firstChild);
 
-let index = 0;
-const totalSlides = slides.children.length;
+// Update total slides (with clones)
+totalSlides = slides.children.length;
 
 function getSlideWidth() {
-  const firstSlide = slides.children[0];
-  return firstSlide.offsetWidth;
+  return slides.children[0].offsetWidth;
 }
 
 function getSlideGap() {
@@ -37630,39 +37637,55 @@ function getSlideGap() {
   return parseInt(style.columnGap || style.gap || 0);
 }
 
-
-
-function showSlide(i) {
-
-  const slideWidth = getSlideWidth();
-  const slideGap = getSlideGap();
-
-
-  // update index (wrap around)
-  if (i < 0) index = totalSlides - 1;
-  else if (i >= totalSlides) index = 0;
-  else index = i;
-
-  // move background images
+function setPosition() {
+  slideWidth = getSlideWidth();
+  slideGap = getSlideGap();
   slides.style.transform = `translateX(-${index * (slideWidth + slideGap)}px)`;
-
-  // fade paragraphs
-  paragraphs.forEach(p => p.classList.remove("active"));
-  paragraphs[index].classList.add("active");
-
-  // slide titles (100% per title)
-  titleTrack.style.transform = `translateX(-${index * 100}%)`;
-
-    // slide sub titles (100% per subtitle)
-  subTitleTrack.style.transform = `translateX(-${index * 100}%)`;
-
-  // sync BBQ images
-  bbqImages.forEach(img => img.classList.remove("active"));
-  bbqImages[index].classList.add("active");
 }
 
-// Automatic sliding
-setInterval(() => showSlide(index + 1), 5000);
+function showSlide(i) {
+  index = i;
+  slides.style.transition = "transform 0.5s ease-in-out";
+  slides.style.transform = `translateX(-${index * (slideWidth + slideGap)}px)`;
 
-// Show default slide
-showSlide(1);
+  // Fade paragraphs
+  paragraphs.forEach(p => p.classList.remove("active"));
+  if (index > 0 && index < totalSlides - 1) {
+    paragraphs[index - 1].classList.add("active");
+  }
+
+  // Titles
+  titleTrack.style.transform = `translateX(-${(index - 1) * 100}%)`;
+  subTitleTrack.style.transform = `translateX(-${(index - 1) * 100}%)`;
+
+  // BBQ images
+  bbqImages.forEach(img => img.classList.remove("active"));
+  if (index > 0 && index < totalSlides - 1) {
+    bbqImages[index - 1].classList.add("active");
+  }
+}
+
+// 2. Reset position when reaching clone
+slides.addEventListener("transitionend", () => {
+  if (index === totalSlides - 1) {
+    slides.style.transition = "none";
+    index = 1; // jump back to first real
+    setPosition();
+  } else if (index === 0) {
+    slides.style.transition = "none";
+    index = totalSlides - 2; // jump to last real
+    setPosition();
+  }
+});
+
+// Auto slide
+setInterval(() => {
+  showSlide(index + 1);
+}, 5000);
+
+// Init
+window.addEventListener("load", () => {
+  setPosition();
+  showSlide(index);
+});
+

@@ -1197,6 +1197,9 @@ figcaption {
 .section_home-header {
   flex-flow: column;
   justify-content: center;
+  min-height: 100vh;
+  background-color: #e4460c;
+  z-index:-1;
   align-items: stretch;
   height: 100vh;
   display: flex;
@@ -8271,9 +8274,10 @@ figcaption {
       position: relative;
       width: 600px;
       min-width: 120px;
+      z-index:2;
       height: 130px;
       overflow: hidden;
-      margin: 80px auto 20px auto;
+      margin: 100px auto 20px auto;
       /* top, right, bottom, left */
     }
 
@@ -8293,11 +8297,13 @@ figcaption {
 
     .slide_container h2 {
       font-size: 27px;
+      color:white;
       text-align: center;
     }
 
     .slide_container p {
       font-size: 12px;
+      color:white;
       text-align: center;
     }
     /* * * * * END Slider paragraphs descriptive text * * * * */
@@ -8375,7 +8381,7 @@ figcaption {
     }
 
     .slider {
-      width: 100%;
+      width: 1700px;
       max-width: 1940px;   
       height: 550px;
       margin: 10px auto;
