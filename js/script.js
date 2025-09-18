@@ -37604,3 +37604,65 @@
       __webpack_require__(5714);
   })();
 })();
+
+
+//* * * * * * Animated css animation * * * * * *//
+const slides = document.querySelector(".container_backgrounds"); // backgrounds
+const paragraphTrack = document.querySelector(".slider_paragraph"); // paragraph container
+const paragraphs = document.querySelectorAll(".slider_paragraph > div"); // each paragraph
+
+const bbqImages = document.querySelectorAll(".container_product img"); // bbq images
+
+const titleTrack = document.querySelector(".title_track"); // Header title track
+const subTitleTrack = document.querySelector(".sub_titles_track"); // wrapper for sliding subtitles
+
+
+let index = 0;
+const totalSlides = slides.children.length;
+
+function getSlideWidth() {
+  const firstSlide = slides.children[0];
+  return firstSlide.offsetWidth;
+}
+
+function getSlideGap() {
+  const style = window.getComputedStyle(slides);
+  return parseInt(style.columnGap || style.gap || 0);
+}
+
+
+
+function showSlide(i) {
+
+  const slideWidth = getSlideWidth();
+  const slideGap = getSlideGap();
+
+
+  // update index (wrap around)
+  if (i < 0) index = totalSlides - 1;
+  else if (i >= totalSlides) index = 0;
+  else index = i;
+
+  // move background images
+  slides.style.transform = `translateX(-${index * (slideWidth + slideGap)}px)`;
+
+  // fade paragraphs
+  paragraphs.forEach(p => p.classList.remove("active"));
+  paragraphs[index].classList.add("active");
+
+  // slide titles (100% per title)
+  titleTrack.style.transform = `translateX(-${index * 100}%)`;
+
+    // slide sub titles (100% per subtitle)
+  subTitleTrack.style.transform = `translateX(-${index * 100}%)`;
+
+  // sync BBQ images
+  bbqImages.forEach(img => img.classList.remove("active"));
+  bbqImages[index].classList.add("active");
+}
+
+// Automatic sliding
+setInterval(() => showSlide(index + 1), 5000);
+
+// Show default slide
+showSlide(1);

@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: BDO Grotesk;
   src: url('../fonts/BDOGrotesk-VF.ttf') format("truetype");
   font-weight: 300 900;
@@ -20,11 +20,11 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-}
+} */
 
 :root {
   --_colors---primary--beige: #f8f7f3;
-  --_typography---font-family--secondary: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --_typography---font-family--secondary: system-ui, -apple-system, BlinkMacSystemFont, "Fredoka", sans-serif;
   --_colors---primary--black: #e4460c;
   --fixed--1rem: 1rem;
   --_typography---font-weight--regular: 400;
@@ -104,7 +104,7 @@
   --spacer--huge: var(--fixed--6rem);
   --_typography---h2--line-height: 100%;
   --spacer--large: var(--fixed--3rem);
-  --_typography---font-family--primary: "BDO Grotesk", Arial, sans-serif;
+  --_typography---font-family--primary: "Fredoka", Arial, sans-serif;
   --fixed--5rem: 5rem;
   --border-radius--xsmall: var(--fixed--0-5rem);
   --fixed--4-5rem: 4.5rem;
@@ -8263,3 +8263,172 @@ figcaption {
   font-style: normal;
   font-display: swap;
 }
+
+
+
+    /* * * * *  START Slider paragraphs descriptive text * * * * */
+    .slider_paragraph {
+      position: relative;
+      width: 600px;
+      min-width: 120px;
+      height: 130px;
+      overflow: hidden;
+      margin: 80px auto 20px auto;
+      /* top, right, bottom, left */
+    }
+
+    .slide_container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .slide_container.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .slide_container h2 {
+      font-size: 27px;
+      text-align: center;
+    }
+
+    .slide_container p {
+      font-size: 12px;
+      text-align: center;
+    }
+    /* * * * * END Slider paragraphs descriptive text * * * * */
+
+
+    /* * * * * START Slide background image * * * * */
+    /* Chinese bbq */
+    .container_card {
+      width: 500px;
+      margin: auto;
+      margin-top: 100px;
+    }
+
+    .slider_title {
+      width: 100%;
+      overflow: hidden;
+      /* hide overflow for sliding effect */
+      text-align: center;
+      margin-top: -50px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .title_track {
+      display: flex;
+      transition: transform 1.0s ease-in-out;
+      /* smooth slide */
+    }
+
+    .main_sub_titles {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+
+    .h2_title {
+      flex: 0 0 100%;
+      /* each title takes full width */
+      font-size: 2rem;
+      font-weight: bold;
+      opacity: 0.9;
+    }
+
+    .main_title {
+      font-size: 110px;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: white;
+      text-align: center;
+    }
+
+    .sub_titles {
+      width: 100%;
+      margin: -100px auto;
+      position: relative;
+      overflow: hidden; /* important for sliding */
+      z-index: -2;
+    }
+
+    .sub_titles_track {
+      display: flex;
+      transition: transform 1.0s ease-in-out;
+      width: 100%; /* 3 slides (100% each) */
+    }
+
+    .sub_titles_h2 {
+      flex: 0 0 100%; /* take full width per slide */
+      font-size: 120px;
+      color: white;
+      text-align: center;
+      font-weight: 900;
+      opacity: 0.8;
+      transform: translateY(0); /* clean baseline */
+    }
+
+    .slider {
+      width: 100%;
+      max-width: 1940px;   
+      height: 550px;
+      margin: 10px auto;
+      border-radius: 12px;
+      z-index: 1;
+    }
+
+    .container_backgrounds {
+      display: flex;
+      transition: transform 1.0s ease-in-out;
+      gap: 190px;
+      z-index: 2;
+      /* sits on top */
+    }
+
+    .container_backgrounds img {
+      width: 100%;
+      max-width: 940px;  
+      max-height: 400px;
+      object-fit: cover;
+      /* crop but keep ratio */
+      border-radius: 10px;
+      flex-shrink: 0;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+
+    .container_card {
+      position: relative; /* parent for positioning */
+      width: 100%;
+      display: flex;
+      justify-content: center; /* center horizontally */
+    }
+
+    .container_product img {
+      width: 20%; /* scales with screen width */
+      max-width: 100%; /* optional cap for large screens */
+      min-width: 280px;
+      height: auto;
+      /* keeps proportions */
+      position: absolute;
+      top: 50%;
+      /* relative to parent */
+      left: 50%;
+      /* relative to parent */
+      transform: translate(-50%, -130%);
+      /* perfect center */
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.6s ease-in-out;
+      /* smooth fade */
+    }
+
+    .container_product img.active {
+      opacity: 1;
+    }
