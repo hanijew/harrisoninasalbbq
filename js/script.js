@@ -37608,25 +37608,28 @@
 
 //* * * * * * Animated css animation * * * * * *//
 const slides = document.querySelector(".container_backgrounds"); // backgrounds
-const paragraphTrack = document.querySelector(".slider_paragraph");
-const paragraphs = document.querySelectorAll(".slider_paragraph > div");
-const bbqImages = document.querySelectorAll(".container_product img");
-const titleTrack = document.querySelector(".title_track");
-const subTitleTrack = document.querySelector(".sub_titles_track");
+const paragraphTrack = document.querySelector(".slider_paragraph"); // paragraph container
+const paragraphs = document.querySelectorAll(".slider_paragraph > div"); // each paragraph
 
-let index = 1; // start at 1 (because we’ll prepend a clone)
-let slideWidth, slideGap;
-let totalSlides = slides.children.length;
+const bbqImages = document.querySelectorAll(".container_product img"); // bbq images
 
-// 1. Clone first and last slides
+const titleTrack = document.querySelector(".title_track"); // Header title track
+const subTitleTrack = document.querySelector(".sub_titles_track"); // wrapper for sliding subtitles
+
+const section_header = document.querySelector('.section_home-header');
+
+// background colors matching slides
+const colors = ["#e54d0c", "#ec7745ff", "#b73401"];
+
+let index = 1;
+const totalSlides = slides.children.length;
+
+// Clone first & last slides
 const firstClone = slides.children[0].cloneNode(true);
-const lastClone = slides.children[totalSlides - 1].cloneNode(true);
+const lastClone = slides.children[slides.children.length - 1].cloneNode(true);
 
 slides.appendChild(firstClone);
-slides.insertBefore(lastClone, slides.firstChild);
-
-// Update total slides (with clones)
-totalSlides = slides.children.length;
+slides.insertBefore(lastClone, slides.children[0]);
 
 function getSlideWidth() {
   return slides.children[0].offsetWidth;
@@ -37637,55 +37640,41 @@ function getSlideGap() {
   return parseInt(style.columnGap || style.gap || 0);
 }
 
-function setPosition() {
-  slideWidth = getSlideWidth();
-  slideGap = getSlideGap();
-  slides.style.transform = `translateX(-${index * (slideWidth + slideGap)}px)`;
-}
+
 
 function showSlide(i) {
-  index = i;
-  slides.style.transition = "transform 0.5s ease-in-out";
+  // update index (wrap around)
+  if (i < 0) index = totalSlides - 1;
+  else if (i >= totalSlides) index = 0;
+  else index = i;
+
+  const slideWidth = getSlideWidth();
+  const slideGap = getSlideGap();
+
+
+  // move background images
   slides.style.transform = `translateX(-${index * (slideWidth + slideGap)}px)`;
 
-  // Fade paragraphs
+  // fade paragraphs
   paragraphs.forEach(p => p.classList.remove("active"));
-  if (index > 0 && index < totalSlides - 1) {
-    paragraphs[index - 1].classList.add("active");
-  }
+  paragraphs[index].classList.add("active");
 
-  // Titles
-  titleTrack.style.transform = `translateX(-${(index - 1) * 100}%)`;
-  subTitleTrack.style.transform = `translateX(-${(index - 1) * 100}%)`;
+  // slide titles (100% per title)
+  titleTrack.style.transform = `translateX(-${index * 100}%)`;
 
-  // BBQ images
+    // slide sub titles (100% per subtitle)
+  subTitleTrack.style.transform = `translateX(-${index * 100}%)`;
+
+  // change body background color 
+  section_header.style.backgroundColor = colors[index % colors.length];
+
+  // sync BBQ images
   bbqImages.forEach(img => img.classList.remove("active"));
-  if (index > 0 && index < totalSlides - 1) {
-    bbqImages[index - 1].classList.add("active");
-  }
+  bbqImages[index].classList.add("active");
 }
 
-// 2. Reset position when reaching clone
-slides.addEventListener("transitionend", () => {
-  if (index === totalSlides - 1) {
-    slides.style.transition = "none";
-    index = 1; // jump back to first real
-    setPosition();
-  } else if (index === 0) {
-    slides.style.transition = "none";
-    index = totalSlides - 2; // jump to last real
-    setPosition();
-  }
-});
+// Automatic sliding
+setInterval(() => showSlide(index + 1), 5000);
 
-// Auto slide
-setInterval(() => {
-  showSlide(index + 1);
-}, 5000);
-
-// Init
-window.addEventListener("load", () => {
-  setPosition();
-  showSlide(index);
-});
-
+// Show default slide
+showSlide(0);

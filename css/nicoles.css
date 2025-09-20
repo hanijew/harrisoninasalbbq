@@ -1198,12 +1198,12 @@ figcaption {
   flex-flow: column;
   justify-content: center;
   min-height: 100vh;
-  background-color: #e4460c;
   z-index:-1;
   align-items: stretch;
   height: 100vh;
   display: flex;
   position: relative;
+  transition: 0.8s ease-in;
 }
 
 .home-header_component {
@@ -8381,31 +8381,44 @@ figcaption {
     }
 
     .slider {
-      width: 1700px;
-      max-width: 1940px;   
+      width: 1700px; 
       height: 550px;
       margin: 10px auto;
       border-radius: 12px;
       z-index: 1;
+      overflow: hidden;          /* make sure offscreen slides don’t show */
+      display: flex;
+      justify-content: center;   /* center active slide */
+      align-items: center;       /* vertical centering if needed */
+      position: relative;
     }
 
     .container_backgrounds {
-      display: flex;
-      transition: transform 1.0s ease-in-out;
-      gap: 190px;
-      z-index: 2;
-      /* sits on top */
+        display: flex;
+        flex-direction: row;
+        gap: 1px;                /* spacing between slides */
+        transition: transform 0.6s ease-in-out;
+        will-change: transform;
+        justify-content: center; 
     }
 
     .container_backgrounds img {
       width: 100%;
       max-width: 940px;  
-      max-height: 400px;
+      max-height: 500px;
+      margin-top:-100px;
       object-fit: cover;
       /* crop but keep ratio */
       border-radius: 10px;
       flex-shrink: 0;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    .container_backgrounds > div {
+        flex: 0 0 100%;
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
 
@@ -8427,7 +8440,7 @@ figcaption {
       /* relative to parent */
       left: 50%;
       /* relative to parent */
-      transform: translate(-50%, -130%);
+      transform: translate(-50%, -110%);
       /* perfect center */
       z-index: 1;
       opacity: 0;
