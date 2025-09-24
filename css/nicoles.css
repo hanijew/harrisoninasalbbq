@@ -8297,7 +8297,19 @@ figcaption {
       z-index:2;
       height: 130px;
       overflow: hidden;
-      margin: 100px auto 20px auto; /* top, right, bottom, left */
+      margin: 10px auto 20px auto; /* top, right, bottom, left */
+    }
+
+    @media (max-width: 768px) {
+      .slider_paragraph {
+        margin: 60px auto 20px auto; /* top, right, bottom, left */
+      }
+    }
+
+    @media (max-width: 410px) {
+      .slider_paragraph {
+        margin: 11px auto 20px auto; /* top, right, bottom, left */
+      }
     }
 
     .slide_container {
