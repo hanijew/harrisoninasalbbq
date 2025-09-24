@@ -1206,6 +1206,25 @@ figcaption {
   transition: 0.8s ease-in;
 }
 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .section_home-header {
+    min-height: auto;       /* let content dictate height */
+    height: auto;
+    padding: 20px;          /* add breathing room */
+    justify-content: flex-start; /* content starts from top */
+  }
+}
+
+@media (max-width: 480px) {
+  .section_home-header {
+    min-height: auto;
+    padding: 15px 10px;     /* tighter padding for small screens */
+    align-items: center;    /* center content horizontally */
+    text-align: center;     /* center text if you have text content */
+  }
+}
+
 .home-header_component {
   flex-flow: column;
   justify-content: center;
@@ -8272,13 +8291,13 @@ figcaption {
     /* * * * *  START Slider paragraphs descriptive text * * * * */
     .slider_paragraph {
       position: relative;
-      width: 600px;
+      width: 90%;
+      max-width: 600px; /* still limit on large screens */
       min-width: 120px;
       z-index:2;
       height: 130px;
       overflow: hidden;
-      margin: 100px auto 20px auto;
-      /* top, right, bottom, left */
+      margin: 100px auto 20px auto; /* top, right, bottom, left */
     }
 
     .slide_container {
@@ -8296,7 +8315,7 @@ figcaption {
     }
 
     .slide_container h2 {
-      font-size: 27px;
+      font-size: 2rem; 
       color:white;
       text-align: center;
     }
@@ -8306,16 +8325,13 @@ figcaption {
       color:white;
       text-align: center;
     }
+
+    
     /* * * * * END Slider paragraphs descriptive text * * * * */
 
 
     /* * * * * START Slide background image * * * * */
-    /* Chinese bbq */
-    .container_card {
-      width: 500px;
-      margin: auto;
-      margin-top: 100px;
-    }
+
 
     .slider_title {
       width: 100%;
@@ -8326,7 +8342,25 @@ figcaption {
       position: relative;
       z-index: 1;
       padding: 0 1rem;   
+      box-sizing: border-box;
     }
+
+
+        /* Fine-tune with breakpoints if needed */
+    @media (max-width: 768px) {
+      .slider_title {
+        margin-top: 1rem; /* tablet */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .slider_title {
+        margin-top: 0.5rem; /* small phones */
+      }
+    }
+
+
+
 
     .title_track {
       display: flex;
@@ -8335,27 +8369,44 @@ figcaption {
     }
 
     .main_sub_titles {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;     
     }
 
 
     .h2_title {
-      flex: 0 0 100%;
-      /* each title takes full width */
+      flex: 0 0 100%;         /* each title takes full width */
       font-size: 2rem;
       font-weight: bold;
       opacity: 0.9;
     }
 
+
     .main_title {
-      font-size: 110px;
+       font-size: clamp(2rem, 8vw, 6rem);
       text-transform: uppercase;
       font-weight: 900;
       color: white;
       text-align: center;
     }
+
+    /* Fine-tune with breakpoints if needed */
+    @media (max-width: 768px) {
+      .main_title {
+        font-size: 3rem; /* tablet */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main_title {
+        font-size: 3.5rem; /* small phones */
+      }
+    }
+
+
+
 
     .sub_titles {
       width: 100%;
@@ -8373,18 +8424,43 @@ figcaption {
 
     .sub_titles_h2 {
       flex: 0 0 100%; /* take full width per slide */
-      font-size: 120px;
+      font-size: clamp(2rem, 10vw, 120px); 
       color: white;
       text-align: center;
       font-weight: 900;
       opacity: 0.8;
       transform: translateY(0); /* clean baseline */
+      word-wrap: break-word; 
+    }
+
+
+    /* Tablet adjustments */
+    @media (max-width: 768px) {
+      .sub_titles {
+        margin: -50px auto;
+      }
+      .sub_titles_h2 {
+        font-size: clamp(1.8rem, 8vw, 80px);
+      }
+    }
+
+    /* Small phones */
+    @media (max-width: 480px) {
+      .sub_titles {
+        margin: -30px auto;
+      }
+      .sub_titles_h2 {
+        font-size: clamp(4.5rem, 7vw, 50px);
+        line-height: 1.1;
+      }
     }
 
     .slider {
-      width: 1700px; 
+      width: 100%;  
+      max-width: 1700px; 
       height: 550px;
-      margin: 10px auto;
+      margin: 5px auto;
+      aspect-ratio: 16 / 9;
       border-radius: 12px;
       z-index: 1;
       overflow: hidden;          /* make sure offscreen slides don’t show */
@@ -8393,6 +8469,23 @@ figcaption {
       align-items: center;       /* vertical centering if needed */
       position: relative;
     }
+
+
+/* Tablet screens */
+@media (max-width: 768px) {
+  .slider {
+    aspect-ratio: 4 / 3;
+    border-radius: 10px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .slider {
+    aspect-ratio: 1 / 1;   /* square for very small screens */
+    border-radius: 8px;
+  }
+}
 
     .container_backgrounds {
         display: flex;
@@ -8407,7 +8500,7 @@ figcaption {
       width: 100%;
       max-width: 940px;  
       max-height: 500px;
-      margin-top:-100px;
+      margin-top:-290px;
       object-fit: cover;
       /* crop but keep ratio */
       border-radius: 10px;
@@ -8428,12 +8521,13 @@ figcaption {
       width: 100%;
       display: flex;
       justify-content: center; /* center horizontally */
+      align-items: center; 
     }
 
     .container_product img {
       width: 20%; /* scales with screen width */
-      max-width: 100%; /* optional cap for large screens */
-      min-width: 280px;
+      max-width: 400px; /* optional cap for large screens */
+      min-width: 150px;
       height: auto;
       /* keeps proportions */
       position: absolute;
@@ -8447,6 +8541,25 @@ figcaption {
       opacity: 0;
       transition: opacity 0.6s ease-in-out;
       /* smooth fade */
+    }
+
+    /* Tablet screens */
+    @media (max-width: 768px) {
+      .container_product img {
+        width: 35%;
+        min-width: 120px;
+        transform: translate(-50%, -90%); /* less upward shift */
+      }
+    }
+
+    /* Small phones */
+    @media (max-width: 480px) {
+      .container_product img {
+        width: 50%;          /* take more space */
+        top: -250px;
+        min-width: 100px;
+        transform: translate(-50%, -80%); /* center better on tiny screens */
+      }
     }
 
     .container_product img.active {
