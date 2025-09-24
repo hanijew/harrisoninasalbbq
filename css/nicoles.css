@@ -8272,9 +8272,8 @@ figcaption {
     /* * * * *  START Slider paragraphs descriptive text * * * * */
     .slider_paragraph {
       position: relative;
-      width: 40%;
-      max-width: 600px;
-      min-width: 200px; 
+      width: 600px;
+      min-width: 120px;
       z-index:2;
       height: 130px;
       overflow: hidden;
@@ -8323,9 +8322,10 @@ figcaption {
       overflow: hidden;
       /* hide overflow for sliding effect */
       text-align: center;
-      margin-top: -50px;
+      margin-top: -3rem; 
       position: relative;
       z-index: 1;
+      padding: 0 1rem;   
     }
 
     .title_track {
